@@ -1,6 +1,15 @@
+/* Program for Bellman ford algorithm.
+	Made by: Jorge Heleno, Marta Cardoso */
+
+
 #include <stdio.h>
 #include <stdlib.h>
 #include <limits.h>
+#include <time.h>
+#include <string.h>
+
+#define ALLOUTPUTFLAG "all"
+#define HELP	"-h"
 
 typedef struct local{
     int distance,id,isReachable,color,check;
@@ -32,13 +41,34 @@ local *removeBegin();
 
 Queue *front, *rear;
 
-int main(){
+int main(int argc, char** argv){
     
-    int N,C,hQ,i,u,v,w;
+    int N,C,hQ,i,u,v,w,all_output=0;
     local *vertexList;
-    
-    if(scanf("%d %d",&N,&C)==1){}
+	time_t start;
+	if(argc==2){
+		if(strcmp(argv[1],ALLOUTPUTFLAG)==0)
+			all_output=1;
+		else if(strcmp(argv[1],HELP)==0){
+				printf("Run program with all flag to show the cost of all nodes or don't put flags for just the time of the algorithm\n");
+			exit(1);
+			}
+		 else{
+			printf("Invalid argument %s \n",argv[1]);
+			exit(1);
+		 }
+	
+	}
+	else if(argc>2){
+		printf("Too much arguments\n");
+		exit(1);
+	}
+    printf("-----------------BELLMAN FORD PROGRAM---------------------\n");
+
+	printf("Introduce the number of nodes followed by the number of connections(of the whole graph): ");
+    if(scanf("%d %d",&N,&C)==1){} //This if is useless it is only here because of an automatic test machine.....same for the rest of useless if's
     vertexList=calloc(sizeof(local),N);
+	printf("Introduce the Paul Erdos number(starting node): ");
     if(scanf("%d",&hQ)==1){}
     for(i=0;i<N;i++){
         (vertexList+i)->distance=INT_MAX;
@@ -57,19 +87,12 @@ int main(){
         insertBegin(vertexList,u,v,w);
         
     }
-    /*for(i=0;i<N;i++){
-        if((vertexList+i)->next!=NULL){
-        path *temp=(vertexList+i)->next;
-        while(temp->next!=NULL){
-            printf("from:%d to:%d weight:%d\n",temp->from->id,temp->to->id,temp->weight);
-            temp=temp->next;
-            }
-        printf("from:%d to:%d weight:%d\n",temp->from->id,temp->to->id,temp->weight);
-        }
-
-    }*/
+	printf("--------------Starting Bellman Ford-------------\n");
+	start=time(NULL);
     Bellman(vertexList,hQ,N,C);
-
+	printf("Bellman Ford over after %.2f\n seconds\n",(double)((time(NULL) -start)));
+	if(all_output==0)
+		exit(0);
     
     for(i=0;i<N;i++){
         local *temp=(vertexList+i);
@@ -81,6 +104,7 @@ int main(){
             printf("U\n");
     
     }
+
 return 0;    
 }
 
