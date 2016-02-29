@@ -23,7 +23,7 @@ typedef struct path{
     struct path *next;
 }path;
 
-/*Struct for queue, an auxiliary struct to help in BFS algorithm*/
+/*Struct for queue , an auxiliary struct to help in BFS algorithm*/
 typedef struct Queue{
     local *aut;
     struct Queue *next;
