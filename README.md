@@ -16,4 +16,4 @@ In the Bellman-Ford we essentially just Relax all nodes and when they all have t
 
 
 For any doubts about the algorithm or the program contact me.
-
+Jorge Heleno
